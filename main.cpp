@@ -21,12 +21,21 @@ int main(int argc, char *argv[])
 
   QApplication a(argc, argv, true);
 
-  QUrl url = QUrl::fromUserInput(QString::fromUtf8(argv[1]));
+  QString source = QString::fromUtf8(argv[1]);
   QString filename = QString::fromUtf8(argv[2]);
 
   CrapShot shot;
   QObject::connect(&shot, &CrapShot::finished, QApplication::instance(), &QApplication::quit);
-  shot.load(url, filename);
+
+  if (source == "-") {
+    QTextStream in(stdin);
+    QString html = in.readAll();
+    shot.loadHTML(html, filename);
+  }
+  else {
+    QUrl url = QUrl::fromUserInput(source);
+    shot.loadURL(url, filename);
+  }
 
   return a.exec();
 }

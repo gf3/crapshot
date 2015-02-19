@@ -73,18 +73,15 @@ void CrapShot::delayedRender() {
   return;
 }
 
-void CrapShot::load(const QUrl &url, const QString &filename) {
+void CrapShot::loadHTML(const QString &html, const QString &filename) {
   mFilename = filename;
+  setupPage();
+  mPage.mainFrame()->setHtml(html);
+}
 
-  mPage.mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
-  mPage.mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
-  mPage.settings()->setAttribute(QWebSettings::AutoLoadImages, true);
-  mPage.settings()->setAttribute(QWebSettings::FrameFlatteningEnabled, true);
-  mPage.settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls, true);
-  mPage.settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
-  mPage.settings()->setAttribute(QWebSettings::PrintElementBackgrounds, true);
-  mPage.setViewportSize(QSize(750, 1334));
-
+void CrapShot::loadURL(const QUrl &url, const QString &filename) {
+  mFilename = filename;
+  setupPage();
   mPage.mainFrame()->load(url);
 }
 
@@ -99,4 +96,15 @@ void CrapShot::render() {
 
   mPage.mainFrame()->print(&printer);
   emit finished(0);
+}
+
+void CrapShot::setupPage() {
+  mPage.mainFrame()->setScrollBarPolicy(Qt::Vertical, Qt::ScrollBarAlwaysOff);
+  mPage.mainFrame()->setScrollBarPolicy(Qt::Horizontal, Qt::ScrollBarAlwaysOff);
+  mPage.settings()->setAttribute(QWebSettings::AutoLoadImages, true);
+  mPage.settings()->setAttribute(QWebSettings::FrameFlatteningEnabled, true);
+  mPage.settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls, true);
+  mPage.settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
+  mPage.settings()->setAttribute(QWebSettings::PrintElementBackgrounds, true);
+  mPage.setViewportSize(QSize(750, 1334));
 }

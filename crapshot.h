@@ -12,7 +12,8 @@ class CrapShot : public QObject {
 
 public:
   CrapShot();
-  void load(const QUrl &url, const QString &filename);
+  void loadHTML(const QString &html, const QString &filename);
+  void loadURL(const QUrl &url, const QString &filename);
 
 signals:
   void finished(int code);
@@ -29,6 +30,7 @@ private:
   bool mSawInitialLayout;
   bool mSawLoadFinished;
 
+  void setupPage();
   void delayedRender();
   void render();
 };
