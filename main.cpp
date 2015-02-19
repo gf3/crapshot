@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     std::cerr << "  'outputfile' is the name of the file to be generated" << std::endl;
     std::cerr << std::endl;
     std::cerr << "Example: " << std::endl;
-    std::cerr << "  " << argv[0] << " uniiverse.com lol.pdf" << std::endl;
+    std::cerr << "  " << argv[0] << " universe.com lol.pdf" << std::endl;
     std::cerr << std::endl;
 
     return 1;

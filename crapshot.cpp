@@ -83,7 +83,7 @@ void CrapShot::load(const QUrl &url, const QString &filename) {
   mPage.settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls, true);
   mPage.settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
   mPage.settings()->setAttribute(QWebSettings::PrintElementBackgrounds, true);
-  mPage.setViewportSize(QSize(2400, 1200));
+  mPage.setViewportSize(QSize(750, 1334));
 
   mPage.mainFrame()->load(url);
 }
@@ -92,9 +92,10 @@ void CrapShot::render() {
   mPage.setViewportSize(mPage.mainFrame()->contentsSize());
 
   QPrinter printer(QPrinter::HighResolution);
-  printer.setMargins(QPagedPaintDevice::Margins());
-  printer.setPageSize(QPrinter::A4);
+  printer.setFullPage(true);
   printer.setOutputFileName(mFilename);
+  printer.setOutputFormat(QPrinter::PdfFormat);
+  printer.setPageSize(QPrinter::A4);
 
   mPage.mainFrame()->print(&printer);
   emit finished(0);
